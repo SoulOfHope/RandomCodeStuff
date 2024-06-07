@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ "$1" = "help" ]
+then
+  echo "execute [file]"
+  echo "A subcommand of compile, compiles then executes, before removing the compiled"
+  echo ""
+  echo "Command Usage: execute ¬"
+  echo "  [File] - Input file"
+  exit 0
+fi
+
+g++ -o "temp.o" "$1" && ./"temp.o" && rm "temp.o"

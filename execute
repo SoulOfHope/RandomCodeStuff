@@ -3,7 +3,7 @@
 if [ "$1" = "help" ]
 then
   echo "execute [file]"
-  echo "A subcommand of compile, compiles then executes, before removing the compiled"
+  echo "A subcommand of compile, compiles then executes, before removing the compiled file"
   echo ""
   echo "Command Usage: execute ¬"
   echo "  [File] - Input file"

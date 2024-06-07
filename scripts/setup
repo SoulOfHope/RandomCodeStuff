@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# Because I refuse to set an alias file among other things.
-
-# Main Script Set
-alias compile="./scripts/compile"
-alias execute="./scripts/execute"

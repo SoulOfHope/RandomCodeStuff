@@ -14,6 +14,7 @@ fi
 
 if [ "$3" = "y" ]
 then
+  clear
   g++ -o "$2" "$1" && ./"$2"
 else
   if [ -z "$1" ]

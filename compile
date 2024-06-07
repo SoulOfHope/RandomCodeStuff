@@ -3,6 +3,7 @@
 if [ "$1" = "help" ]
 then
   echo "compile [file] [output] [execute]"
+  echo "Allows a user to compile C++ programs with G++"
   echo ""
   echo "Command Usage: compile ¬"
   echo "  [File] - Input file"

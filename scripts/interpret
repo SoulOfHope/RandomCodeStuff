@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ "$1" = "help" ]
+then
+  echo "interpret [lang] [file] [output] [execute]"
+  echo "Allows a user to interpret a file in a variety of languages, or even to invoke their own by editing it"
+  echo ""
+  echo "Command Usage: interpret ¬"
+  echo "  [Lang] - Language to use"
+  echo "  [File] - Input file"
+  exit 0
+fi
+
+if [ "$1" = "python" ] || [ "$1" = "-py" ] || [ "$1" = "py" ]
+then
+  python "$2"
+else
+  echo "Language Not Found! Did you forget to add it? If so add it in /scripts"
+fi

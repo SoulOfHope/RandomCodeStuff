@@ -6,8 +6,14 @@ then
   echo "A subcommand of compile, compiles then executes, before removing the compiled file"
   echo ""
   echo "Command Usage: execute ¬"
+  echo "  [Lang] - Language to execute in"
   echo "  [File] - Input file"
   exit 0
 fi
 
-clear && g++ -o "temp.o" "$1" && ./"temp.o" && rm "temp.o"
+if [ "$1" = "c++" ]
+then
+  clear && g++ -o "temp.o" "$2" && ./"temp.o" && rm "temp.o"
+else
+  echo "Language not found, Did you spell it correctly?"
+fi

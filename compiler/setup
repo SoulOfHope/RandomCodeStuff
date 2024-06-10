@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo "alias compiler=\"./compiler/compiler\"">>$HOME/.bashrc
+echo "alias compile=\"./compiler/compile/compile\"">>$HOME/.bashrc
+echo "alias execute=\"./compiler/compile/execute\"">>$HOME/.bashrc
+
+sudo chmod u+x compiler/compiler
+sudo chmod u+x compiler/compile/compile
+sudo chmod u+x compiler/compile/execute
+sudo chmod u+x compiler/compile/interpret
+
+source $HOME/.bashrc

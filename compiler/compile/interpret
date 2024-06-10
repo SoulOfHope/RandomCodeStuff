@@ -15,5 +15,5 @@ if [ "$1" = "python" ] || [ "$1" = "-py" ] || [ "$1" = "py" ]
 then
   python "$2"
 else
-  echo "Language Not Found! Did you forget to add it? If so add it in /scripts"
+  echo "Language Not Found! Did you forget to add it? If so add it in /compiler/compile"
 fi

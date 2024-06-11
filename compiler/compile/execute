@@ -11,12 +11,12 @@ then
   exit 0
 fi
 
-if [ "$1" = "c++" ]
+if [ "$1" = "c++" ] || [ "$1" = "cpp" ]
 then
   clear && g++ -o "temp.o" "$2" && ./"temp.o" && rm "temp.o"
 elif [ "$1" = "python" ] || [ "$1" = "py" ]
 then
-  python "$2"
+  clear && python -V && python "$2"
 else
   echo "Language not found, Did you spell it correctly?"
 fi

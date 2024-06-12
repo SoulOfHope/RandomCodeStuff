@@ -40,14 +40,13 @@ void write_save(UserData& user) {
             write_string(outfile, user.name);
             outfile.write(reinterpret_cast<const char*>(&user.age), sizeof(user.age));
             std::cout << "User information saved successfully." << std::endl;
-            saved = true;
         } else {
             std::cerr << "Failed to open file for writing." << std::endl;
-            return 1;
+            std::exit(1);
         }
     } catch (const std::exception& e) {
         std::cerr << "Failed to save user information: " << e.what() << std::endl;
-        return 1;
+        std::exit(1);
     }
 }
 
@@ -73,7 +72,7 @@ int main() {
     bool saved = false;
     UserData user;
 
-    if (std::ifstream("save.bin", std::ios::binary).good() && std::filesystem::file_size("save.bin") > 0) {
+    if (std::ifstream("save.bin", std::ios::binary).good() && fs::file_size("save.bin") > 0) {
         read_save(user);
     } else {
         std::cout << "Enter your name: ";
@@ -90,6 +89,7 @@ int main() {
     std::cout << "Excellent. Let's begin." << std::endl;
 
     write_save(user);
+    saved = true;
 
     return 0;
 }

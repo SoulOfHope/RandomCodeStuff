@@ -1,5 +1,6 @@
 // Imports
 #include <cstdlib>
+#include <cstdint>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -8,44 +9,63 @@
 // Namespace Declarations
 namespace fs = std::filesystem;
 
-//Declare Using Namespace STD
+// Declare Using Namespace STD
 using namespace std;
 
 
-struct UserData {
+class UserData {
+public:
     std::string name;
     int age;
 };
 
-// Serialization function to write a string to a binary file
-void writeString(std::ofstream& file, const std::string& str) {
-    size_t len = str.length();
-    file.write(reinterpret_cast<const char*>(&len), sizeof(size_t));
-    file.write(str.c_str(), len);
+void write_string(std::ofstream& file, const std::string& string) {
+    uint64_t length = string.length();
+    file.write(reinterpret_cast<const char*>(&length), sizeof(length));
+    file.write(string.c_str(), length);
 }
 
-// Deserialization function to read a string from a binary file
-std::string readString(std::ifstream& file) {
-    size_t len;
-    file.read(reinterpret_cast<char*>(&len), sizeof(size_t));
-    std::string str(len, '\0');
-    file.read(&str[0], len);
+std::string read_string(std::ifstream& file) {
+    uint64_t length;
+    file.read(reinterpret_cast<char*>(&length), sizeof(length));
+    std::string str(length, '\0');
+    file.read(&str[0], length);
     return str;
 }
 
-void readSave(){
-    // Reading data from the binary file
-    std::ifstream infile("save.bin", std::ios::binary);
-    if (infile.is_open()) {
-        UserData readUser;
-        readUser.name = readString(infile);
-        infile.read(reinterpret_cast<char*>(&readUser.age), sizeof(int));
-        std::cout << "Name: " << readUser.name << std::endl;
-        std::cout << "Age: " << readUser.age << std::endl;
-        infile.close();
-    } else {
-        std::cerr << "Failed to open file for reading." << std::endl;
-        exit(1);
+void write_save(UserData& user) {
+    try {
+        std::ofstream outfile("save.bin", std::ios::binary);
+        if (outfile) {
+            write_string(outfile, user.name);
+            outfile.write(reinterpret_cast<const char*>(&user.age), sizeof(user.age));
+            std::cout << "User information saved successfully." << std::endl;
+            saved = true;
+        } else {
+            std::cerr << "Failed to open file for writing." << std::endl;
+            return 1;
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Failed to save user information: " << e.what() << std::endl;
+        return 1;
+    }
+}
+
+void read_save(UserData& user) {
+    try {
+        std::ifstream infile("save.bin", std::ios::binary);
+        if (infile) {
+            user.name = read_string(infile);
+            infile.read(reinterpret_cast<char*>(&user.age), sizeof(user.age));
+            std::cout << "Name: " << user.name << std::endl;
+            std::cout << "Age: " << user.age << std::endl;
+        } else {
+            std::cerr << "Failed to open file for reading." << std::endl;
+            std::exit(1);
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Failed to read save file: " << e.what() << std::endl;
+        std::exit(1);
     }
 }
 
@@ -53,14 +73,13 @@ int main() {
     bool saved = false;
     UserData user;
 
-    if (fs::exists("save.bin") && fs::is_empty("save.bin") != true){
-        readSave()
+    if (std::ifstream("save.bin", std::ios::binary).good() && std::filesystem::file_size("save.bin") > 0) {
+        read_save(user);
     } else {
-    std::cout << "Enter your name: ";
-    std::getline(std::cin, user.name);
-
-    std::cout << "Enter your age: ";
-    std::cin >> user.age;
+        std::cout << "Enter your name: ";
+        std::getline(std::cin, user.name);
+        std::cout << "Enter your age: ";
+        std::cin >> user.age;
     }
 
     if (user.age < 12) {
@@ -70,18 +89,8 @@ int main() {
 
     std::cout << "Excellent. Let's begin." << std::endl;
 
-    // Writing data to a binary file
-    std::ofstream outfile("save.bin", std::ios::binary);
-    if (outfile.is_open()) {
-        writeString(outfile, user.name);
-        outfile.write(reinterpret_cast<const char*>(&user.age), sizeof(int));
-        std::cout << "User information saved successfully." << std::endl;
-        saved = true;
-        outfile.close();
-    } else {
-        std::cerr << "Failed to open file for writing." << std::endl;
-        return 1;
-    }
+    write_save(user);
 
     return 0;
 }
+

@@ -13,7 +13,7 @@ fi
 
 if [ "$1" = "c++" ] || [ "$1" = "cpp" ]
 then
-  clear && g++ -o "temp.o" "$2" -std=c++17 && ./"temp.o" && rm "temp.o"
+  clear && g++ -std=c++17 -o "temp.o" "$2" && ./"temp.o" && sleep .5 && rm -rf "temp.o"
 elif [ "$1" = "python" ] || [ "$1" = "py" ]
 then
   clear && python -V && python "$2"

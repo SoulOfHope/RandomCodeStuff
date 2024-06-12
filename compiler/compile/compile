@@ -22,7 +22,8 @@ cpp() {
   if [ "$execrule" = "y" ]
   then
     clear
-    g++ -o "$ofile" "$ifile" && ./"$ofile"
+    g++ -std=c++17 -o "$ofile" "$ifile"
+    ./"$ofile"
     exit
   else
     if [ -z "$ifile" ]
@@ -32,16 +33,16 @@ cpp() {
     elif [ -z "$ofile" ]
     then
       echo "Defaulting to output.o"
-      g++ -o "output.o" "$ifile"
+      g++ -std=c++17 -o "output.o" "$ifile"
       exit
     else
-      g++ -o "$ofile" "$ifile"
+      g++ -std=c++17 -o "$ofile" "$ifile"
       exit
     fi
   fi
 }
 
-if [ "$lang" = "c++" ]
+if [ "$lang" = "c++" ] || [ "$lang" = "cpp" ]
 then
   cpp
 elif [ -z "$lang" ]

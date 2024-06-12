@@ -54,7 +54,7 @@ int main() {
     UserData user;
 
     if (fs::exists("save.bin") && fs::is_empty("save.bin") != true){
-        
+        readSave()
     } else {
     std::cout << "Enter your name: ";
     std::getline(std::cin, user.name);

@@ -1,7 +1,0 @@
-#!/bin/bash
-
-sudo chmod u+x compiler/setup
-sudo chmod u+x compiler/compiler
-sudo chmod u+x compiler/compile/compile
-sudo chmod u+x compiler/compile/execute
-sudo chmod u+x compiler/compile/interpret
